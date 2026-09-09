@@ -60,3 +60,19 @@ vim.filetype.add({
 vim.g.lazyvim_prettier_needs_config = true
 vim.g.lazyvim_picker = "telescope"
 vim.g.lazyvim_cmp = "blink.cmp"
+
+-- Windows: the legacy C:\MinGW\bin (GCC 6.3.0, 2016) sits ahead of newer toolchains
+-- in the machine PATH and cannot build current treesitter parsers. nvim-treesitter
+-- main compiles via the Rust `cc` crate, which honours $CC, so point it at the
+-- newest gcc we have. Scoped to Neovim only -- the system PATH is untouched.
+if vim.fn.has("win32") == 1 then
+  for _, cc in ipairs({
+    vim.fn.expand("~/scoop/apps/mingw/current/bin/gcc.exe"),
+    vim.fn.expand("~/scoop/apps/gcc/current/bin/gcc.exe"),
+  }) do
+    if vim.fn.executable(cc) == 1 then
+      vim.env.CC = cc
+      break
+    end
+  end
+end

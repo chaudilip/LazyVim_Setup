@@ -125,7 +125,7 @@ return {
         desc = "Lists LSP incoming calls",
       },
       {
-        "sf",
+        "sb",
         function()
           local telescope = require("telescope")
           local function telescope_buffer_dir()
