@@ -7,6 +7,7 @@ return {
     opts = function()
       return {
         transparent = true,
+        style = "vivid",
       }
     end,
   },
